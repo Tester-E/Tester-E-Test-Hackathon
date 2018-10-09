@@ -26,6 +26,8 @@ public class MyStepDefs {
     private WebDriver driver;
 
 
+
+
     @When("^I go to \"([^\"]*)\"$")
     public void iGoTo(String website) {
         driver = new FirefoxDriver();
@@ -184,7 +186,7 @@ public class MyStepDefs {
     @And("^I select the property$")
     public void iSelectTheProperty() throws Throwable {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.findElement(By.cssSelector("#hotel-461536-container > div:nth-child(1) > div:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("#hotel-43144-container > div:nth-child(1) > div:nth-child(1) > section:nth-child(1) > div:nth-child(2)")).click();
         Thread.sleep(5000);
 
         Set <String> st= driver.getWindowHandles();
@@ -210,7 +212,7 @@ public class MyStepDefs {
         jse.executeScript("window.scrollBy(0,500)", "");
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.findElement(By.cssSelector("#MasterRoom-3088136 > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("#MasterRoom-3124466 > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(5) > div:nth-child(1) > div:nth-child(1) > button:nth-child(1)")).click();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.cssSelector("div.PaymentOptionsModal-detail:nth-child(3) > button:nth-child(4)")).click();
         Thread.sleep(2000);
@@ -219,6 +221,7 @@ public class MyStepDefs {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         Thread.sleep(500);
         driver.findElement(By.cssSelector(".btn")).click();
+        Thread.sleep(3000);
     }
 
 
@@ -226,26 +229,30 @@ public class MyStepDefs {
     @And("^I enter card info \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\" \"([^\"]*)\"$")
     public void iEnterCardInfo(String cardtype, String cardno, String holdername, String date, String cvccvv) throws Throwable {
 
-        if (cardtype.equals("My saved cards")){
+        if (cardtype.equals("My saved cards")) {
             Select dropdown2 = new Select(driver.findElement(By.cssSelector("#paymentMethod")));
             dropdown2.selectByIndex(1);
-        }
-
-        else if (cardtype.equals("Visa / MasterCard / JCB / Amex")){
+        } else if (cardtype.equals("Visa / MasterCard / JCB / Amex")) {
             Select dropdown2 = new Select(driver.findElement(By.cssSelector("#paymentMethod")));
-                    dropdown2.selectByIndex(2);
-        }
-
-        else {
+            dropdown2.selectByIndex(2);
+        } else {
         }
 
         driver.findElement(By.cssSelector("#cardNumber")).click();
         driver.findElement(By.cssSelector("#cardNumber")).sendKeys(cardno);
         driver.findElement(By.cssSelector("#cardHolderName")).click();
-        driver.findElement(By.cssSelector("#expiryDate")).sendKeys(holdername);
+        driver.findElement(By.cssSelector("#cardHolderName")).sendKeys(holdername);
         driver.findElement(By.cssSelector("#cardNumber")).click();
         driver.findElement(By.cssSelector("#expiryDate")).sendKeys(date);
         driver.findElement(By.cssSelector("#cvvCode")).click();
         driver.findElement(By.cssSelector("#cvvCode")).sendKeys(cvccvv);
+        driver.findElement(By.cssSelector("#issuingBank")).click();
+        driver.findElement(By.cssSelector("#issuingBank")).sendKeys("AKBANK");
+        Thread.sleep(500);
 
+        JavascriptExecutor jse2 = (JavascriptExecutor)driver;
+        jse2.executeScript("window.scrollBy(0,500)", "");
+
+        driver.findElement(By.cssSelector("button.btn:nth-child(2)")).click();
+    }
 }
